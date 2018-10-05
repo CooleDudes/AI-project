@@ -33,6 +33,7 @@ class AlgoStrategy(gamelib.AlgoCore):
         #game_state.suppress_warnings(True)  #Uncomment this line to suppress warnings.
 
         self.build_defences(self, game_state)
+	self.deploy_attackers(self, game_state)
 
         game_state.submit_turn()
 
@@ -82,10 +83,11 @@ class AlgoStrategy(gamelib.AlgoCore):
         baut destructors and random positionen ohne den Weg zum Angriff
         """
         while game_state.get_resource(game_state.CORES) >= game_state.type_cost(DESTRUCTOR) and len(possible_locations) > 0:
-            for i in range(0,13)
+            for i in range(0,13):
 				possible_locations.remove([i,13-i])
-			for i in range(1,14)
+            for i in range(1,14):
 				possible_locations.remove([i,14-i])
+            
             location_index = random.randint(0, len(possible_locations) - 1)
             build_location = possible_locations[location_index]
             """
