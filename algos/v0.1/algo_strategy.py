@@ -32,8 +32,8 @@ class AlgoStrategy(gamelib.AlgoCore):
         gamelib.debug_write('Performing turn {} of your custom algo strategy'.format(game_state.turn_number))
         #game_state.suppress_warnings(True)  #Uncomment this line to suppress warnings.
 
-        self.build_defences(self, game_state)
-	self.deploy_attackers(self, game_state)
+        self.build_defences(game_state)
+        self.deploy_attackers(game_state)
 
         game_state.submit_turn()
 
@@ -74,19 +74,21 @@ class AlgoStrategy(gamelib.AlgoCore):
         possible_locations = self.filter_blocked_locations(all_locations, game_state)
 		
 		
-		"""
-		für ein destructor mit wall davor gedacht
-		"""
-		possible_locations_v01prebuilt = self.filter_blocked_locations(all_locations, game_state)
+        """
+        für ein destructor mit wall davor gedacht
+        """
+        possible_locations_v01prebuilt = self.filter_blocked_locations(all_locations, game_state)
 
         """
         baut destructors and random positionen ohne den Weg zum Angriff
         """
         while game_state.get_resource(game_state.CORES) >= game_state.type_cost(DESTRUCTOR) and len(possible_locations) > 0:
             for i in range(0,13):
-				possible_locations.remove([i,13-i])
+                if [i,13-i] in possible_locations:
+                    possible_locations.remove([i,13-i])
             for i in range(1,14):
-				possible_locations.remove([i,14-i])
+                if [i,14-i] in possible_locations:
+                    possible_locations.remove([i,14-i])
             
             location_index = random.randint(0, len(possible_locations) - 1)
             build_location = possible_locations[location_index]
@@ -94,7 +96,7 @@ class AlgoStrategy(gamelib.AlgoCore):
             Build it and remove the location since you can't place two 
             firewalls in the same location.
             """
-            game_state.attempt_spawn(ENCRYPTOR, build_location)
+            game_state.attempt_spawn(DESTRUCTOR, build_location)
             possible_locations.remove(build_location)
 
     def deploy_attackers(self, game_state):
@@ -108,7 +110,7 @@ class AlgoStrategy(gamelib.AlgoCore):
         10 pings in [14,0]
         """
         if game_state.can_spawn(EMP, [14, 0], 10):
-            game_state.attempt_spawn(EMP, [14, 0], 10)
+        	game_state.attempt_spawn(EMP, [14, 0], 10)
 
  
         """
@@ -132,22 +134,6 @@ class AlgoStrategy(gamelib.AlgoCore):
         """
         deploy_locations = self.filter_blocked_locations(friendly_edges, game_state)
         
-        """
-        While we have remaining bits to spend lets send out scramblers randomly.
-        """
-        while game_state.get_resource(game_state.BITS) >= game_state.type_cost(SCRAMBLER) and len(deploy_locations) > 0:
-           
-            """
-            Choose a random deploy location.
-            """
-            deploy_index = random.randint(0, len(deploy_locations) - 1)
-            deploy_location = deploy_locations[deploy_index]
-            
-            game_state.attempt_spawn(SCRAMBLER, deploy_location)
-            """
-            We don't have to remove the location since multiple information 
-            units can occupy the same space.
-            """
         
     def filter_blocked_locations(self, locations, game_state):
         filtered = []
