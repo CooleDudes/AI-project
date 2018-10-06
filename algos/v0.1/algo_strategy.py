@@ -109,8 +109,8 @@ class AlgoStrategy(gamelib.AlgoCore):
         """
         10 pings in [14,0]
         """
-        if game_state.can_spawn(EMP, [14, 0], 10):
-        	game_state.attempt_spawn(EMP, [14, 0], 10)
+        if game_state.can_spawn(PING, [14, 0], 10):
+        	game_state.attempt_spawn(PING, [14, 0], 10)
 
  
         """
