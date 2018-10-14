@@ -127,6 +127,7 @@ class AlgoStrategy(gamelib.AlgoCore):
         if(info_kind == destructor_positions):
 	    
         if(info_kind == filter_positions):
+            return
 	    
         
         
