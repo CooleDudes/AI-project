@@ -37,9 +37,6 @@ class AlgoStrategy(gamelib.AlgoCore):
 
         game_state.submit_turn()
 
-		
-
-
 
 
     def build_defences(self, game_state):
@@ -52,7 +49,7 @@ class AlgoStrategy(gamelib.AlgoCore):
                 game_state.attempt_spawn(DESTRUCTOR, location)
 
         """
-	am linken Rand 2 encryptors um die information zu buffen
+        am linken Rand 2 encryptors um die information zu buffen
         """
         firewall_locations = [[3, 10], [2, 11]]
         for location in firewall_locations:
@@ -60,7 +57,7 @@ class AlgoStrategy(gamelib.AlgoCore):
                 game_state.attempt_spawn(ENCRYPTOR, location)
 
         """
-	all_locations beinhaltet Plaetze auf unserer Seite
+        all_locations beinhaltet Plaetze auf unserer Seite
         """
         all_locations = []
         for i in range(game_state.ARENA_SIZE):
@@ -72,8 +69,6 @@ class AlgoStrategy(gamelib.AlgoCore):
         possible_locations ist all_locations ohne die schon besetzten Plaetze
         """
         possible_locations = self.filter_blocked_locations(all_locations, game_state)
-		
-		
         """
         für ein destructor mit wall davor gedacht
         """
@@ -101,7 +96,7 @@ class AlgoStrategy(gamelib.AlgoCore):
 
     def deploy_attackers(self, game_state):
         """
-	macht nichts bis BITS > 10
+        macht nichts bis BITS > 10
         """
         if (game_state.get_resource(game_state.BITS) < 10):
             return
