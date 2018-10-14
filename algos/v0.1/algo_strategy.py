@@ -121,10 +121,10 @@ class AlgoStrategy(gamelib.AlgoCore):
         """
         Hier sollen alle Informationen zum Gegner abgerufen werden koennen
         """
-	if(info_kind == defensiv_weight):
+        if(info_kind == defensiv_weight):
 	    defensiv_weight['links','rechts']
 	    gamelib.debug_write('The defensiv weight of enemy is ')
-	if(info_kind == destructor_positions):
+        if(info_kind == destructor_positions):
 	    
         if(info_kind == filter_positions):
 	    
