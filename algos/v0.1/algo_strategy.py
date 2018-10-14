@@ -120,20 +120,18 @@ class AlgoStrategy(gamelib.AlgoCore):
         deploy units there.
         """
         deploy_locations = self.filter_blocked_locations(friendly_edges, game_state)
-	
     
     
     def analyse_Enemy(self, game_state, info_kind):
-	"""
-	Hier sollen alle Informationen zum Gegner abgerufen werden koennen
-	"""
+        """
+        Hier sollen alle Informationen zum Gegner abgerufen werden koennen
+        """
 	if(info_kind == defensiv_weight):
 	    defensiv_weight['links','rechts']
-	    gamelib.debug_write('The defensiv weight of enemy is '+''.join(string1(i) for i in defences_weight))
+	    gamelib.debug_write('The defensiv weight of enemy is ')
 	if(info_kind == destructor_positions):
 	    
-	
-	if(info_kind == filter_positions):
+        if(info_kind == filter_positions):
 	    
         
         
