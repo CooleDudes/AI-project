@@ -12,8 +12,8 @@ class AlgoStrategy(gamelib.AlgoCore):
         random.seed()
 
     def on_game_start(self, config):
-        """
-        Read in config and perform any initial setup here
+        """ 
+        Read in config and perform any initial setup here 
         """
         gamelib.debug_write('Configuring your custom algo strategy...')
         self.config = config
@@ -29,13 +29,16 @@ class AlgoStrategy(gamelib.AlgoCore):
     def on_turn(self, turn_state):
 
         game_state = gamelib.GameState(self.config, turn_state)
-        gamelib.debug_write('Performing turn {} of the best boi'.format(game_state.turn_number))
+        gamelib.debug_write('Performing turn {} of your custom algo strategy'.format(game_state.turn_number))
         #game_state.suppress_warnings(True)  #Uncomment this line to suppress warnings.
 
         self.build_defences(game_state)
         self.deploy_attackers(game_state)
-        analyse_Enemy(game_state, 'destructor_positions')
+
         game_state.submit_turn()
+
+		
+
 
 
 
@@ -49,7 +52,7 @@ class AlgoStrategy(gamelib.AlgoCore):
                 game_state.attempt_spawn(DESTRUCTOR, location)
 
         """
-        am linken Rand 2 encryptors um die information zu buffen
+	am linken Rand 2 encryptors um die information zu buffen
         """
         firewall_locations = [[3, 10], [2, 11]]
         for location in firewall_locations:
@@ -57,18 +60,20 @@ class AlgoStrategy(gamelib.AlgoCore):
                 game_state.attempt_spawn(ENCRYPTOR, location)
 
         """
-        all_locations beinhaltet Plaetze auf unserer Seite
+	all_locations beinhaltet Plaetze auf unserer Seite
         """
         all_locations = []
         for i in range(game_state.ARENA_SIZE):
             for j in range(math.floor(game_state.ARENA_SIZE / 2)):
                 if (game_state.game_map.in_arena_bounds([i, j])):
                     all_locations.append([i, j])
-
+        
         """
         possible_locations ist all_locations ohne die schon besetzten Plaetze
         """
         possible_locations = self.filter_blocked_locations(all_locations, game_state)
+		
+		
         """
         für ein destructor mit wall davor gedacht
         """
@@ -84,11 +89,11 @@ class AlgoStrategy(gamelib.AlgoCore):
             for i in range(1,14):
                 if [i,14-i] in possible_locations:
                     possible_locations.remove([i,14-i])
-
+            
             location_index = random.randint(0, len(possible_locations) - 1)
             build_location = possible_locations[location_index]
             """
-            Build it and remove the location since you can't place two
+            Build it and remove the location since you can't place two 
             firewalls in the same location.
             """
             game_state.attempt_spawn(DESTRUCTOR, build_location)
@@ -96,42 +101,40 @@ class AlgoStrategy(gamelib.AlgoCore):
 
     def deploy_attackers(self, game_state):
         """
-        macht nichts bis BITS > 10
+	macht nichts bis BITS > 10
         """
         if (game_state.get_resource(game_state.BITS) < 10):
             return
-
+        
         """
         10 pings in [14,0]
         """
         if game_state.can_spawn(PING, [14, 0], 10):
         	game_state.attempt_spawn(PING, [14, 0], 10)
 
-
-        friendly_edges = game_state.game_map.get_edge_locations(game_state.game_map.BOTTOM_LEFT) + game_state.game_map.get_edge_locations(game_state.game_map.BOTTOM_RIGHT)
-
+ 
         """
-        Remove locations that are blocked by our own firewalls since we can't
+        NOTE: the locations we used above to spawn information units may become 
+        blocked by our own firewalls. We'll leave it to you to fix that issue 
+        yourselves.
+
+        Lastly lets send out Scramblers to help destroy enemy information units.
+        A complex algo would predict where the enemy is going to send units and 
+        develop its strategy around that. But this algo is simple so lets just 
+        send out scramblers in random locations and hope for the best.
+
+        Firstly information units can only deploy on our edges. So lets get a 
+        list of those locations.
+        """
+        friendly_edges = game_state.game_map.get_edge_locations(game_state.game_map.BOTTOM_LEFT) + game_state.game_map.get_edge_locations(game_state.game_map.BOTTOM_RIGHT)
+        
+        """
+        Remove locations that are blocked by our own firewalls since we can't 
         deploy units there.
         """
         deploy_locations = self.filter_blocked_locations(friendly_edges, game_state)
-
-
-    def analyse_Enemy(self, game_state, info_kind):
-        """
-        Hier sollen alle Informationen zum Gegner abgerufen werden koennen
-        """
-
-        if info_kind == 'defensiv_weight':
-            defensiv_weight['links','rechts']
-            gamelib.debug_write('The defensiv weight of enemy is {}'.defensiv_weight[0]
-        if info_kind == 'destructor_positions':
-            return
-        if info_kind == 'filter_positions':
-            return
-
-
-
+        
+        
     def filter_blocked_locations(self, locations, game_state):
         filtered = []
         for location in locations:
