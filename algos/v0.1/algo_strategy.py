@@ -29,7 +29,7 @@ class AlgoStrategy(gamelib.AlgoCore):
     def on_turn(self, turn_state):
 
         game_state = gamelib.GameState(self.config, turn_state)
-        gamelib.debug_write('Performing turn {} of your custom algo strategy'.format(game_state.turn_number))
+        gamelib.debug_write('Performing turn {} of the best boi'.format(game_state.turn_number))
         #game_state.suppress_warnings(True)  #Uncomment this line to suppress warnings.
 
         self.build_defences(game_state)
@@ -112,20 +112,7 @@ class AlgoStrategy(gamelib.AlgoCore):
         if game_state.can_spawn(PING, [14, 0], 10):
         	game_state.attempt_spawn(PING, [14, 0], 10)
 
- 
-        """
-        NOTE: the locations we used above to spawn information units may become 
-        blocked by our own firewalls. We'll leave it to you to fix that issue 
-        yourselves.
 
-        Lastly lets send out Scramblers to help destroy enemy information units.
-        A complex algo would predict where the enemy is going to send units and 
-        develop its strategy around that. But this algo is simple so lets just 
-        send out scramblers in random locations and hope for the best.
-
-        Firstly information units can only deploy on our edges. So lets get a 
-        list of those locations.
-        """
         friendly_edges = game_state.game_map.get_edge_locations(game_state.game_map.BOTTOM_LEFT) + game_state.game_map.get_edge_locations(game_state.game_map.BOTTOM_RIGHT)
         
         """
@@ -133,6 +120,21 @@ class AlgoStrategy(gamelib.AlgoCore):
         deploy units there.
         """
         deploy_locations = self.filter_blocked_locations(friendly_edges, game_state)
+	
+    
+    
+    def analyse_Enemy(self, game_state, info_kind):
+	"""
+	Hier sollen alle Informationen zum Gegner abgerufen werden koennen
+	"""
+	if(info_kind == defensiv_weight):
+	    defensiv_weight['links','rechts']
+	    gamelib.debug_write('The defensiv weight of enemy is '+''.join(string1(i) for i in defences_weight))
+	if(info_kind == destructor_positions):
+	    
+	
+	if(info_kind == filter_positions):
+	    
         
         
     def filter_blocked_locations(self, locations, game_state):
