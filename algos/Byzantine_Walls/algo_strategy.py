@@ -78,7 +78,7 @@ class AlgoStrategy(gamelib.AlgoCore):
         firewall_locations = [[0,13],[1,13],[2,13],[4,13],[9,13],[10,13],[11,13],[16,13],[17,13],[18,13],[23,13],[15,13],[27,13]]
         for location in firewall_locations:
             if game_state.can_spawn(FILTER, location):
-                game_state.attempt_spawn(FILTER, locations)
+                game_state.attempt_spawn(FILTER, location)
                 
         destructor_locations = [[3,13],[10,12],[17,12],[24,13]]
         for location in destructor_locations:
@@ -97,11 +97,11 @@ class AlgoStrategy(gamelib.AlgoCore):
         firewall_locations = [[26,13],[8,13],[19,13],[5,12],[22,12]]
         for location in firewall_locations:
             if game_state.can_spawn(FILTER, location):
-                game_state.attempt_spawn(FILTER, locations)
+                game_state.attempt_spawn(FILTER, location)
 				
-		"""
+        """
         Stage 3: The walls get extended in order to keep Ping-thunelling strategies out.
-        """		
+        """
 				
         destructor_locations = [[11,12],[16,12]]
         for location in destructor_locations:
@@ -111,7 +111,7 @@ class AlgoStrategy(gamelib.AlgoCore):
         firewall_locations = [[12,13],[15,13],[19,12],[8,12],[13,11],[14,11],[6,11],[21,11],[7,10],[20,10],[9,11],[18,11],[10,10],[17,10],[8,9],[19,9],[9,8],[18,8]]
         for location in firewall_locations:
             if game_state.can_spawn(FILTER, location):
-                game_state.attempt_spawn(FILTER, locations)
+                game_state.attempt_spawn(FILTER, location)
 
     def deploy_attackers(self, game_state):
         """
@@ -119,7 +119,7 @@ class AlgoStrategy(gamelib.AlgoCore):
         a turn where we do.
         """
 		
-        if game_state.get_resource(self.BITS) >= 12:
+        if game_state.get_resource(game_state.BITS) >= 12:
             game_state.attempt_spawn(EMP,[17,3],4)
 
 if __name__ == "__main__":
